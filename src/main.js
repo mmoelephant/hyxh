@@ -5,6 +5,10 @@ import store from './store'
 import './registerServiceWorker'
 import './plugins/element.js'
 import './style/base.stylus'
+import api from './api/api'
+
+// Vue.prototype.$echarts = echarts;
+Vue.prototype.$api = api
 
 Vue.config.productionTip = false
 

@@ -7,10 +7,10 @@
 				<div class="con1">
 					<div class="conTitle">
 						<div class="conTitle_left"><img src="../../public/img/smallico1.png"><span>协会动态</span></div>
-						<div class="moreBtn">更多</div>
+						<div class="moreBtn" @click="morexhNews">更多</div>
 					</div>
 					<div class="conText">
-						<div class="conItem nice"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
+						<div class="conItem nice"><div @click="toDetail">我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
 						<div class="conItem"><div>州建设工会组织看电影《反腐枪声》</div><span>6-19</span></div>
 						<div class="conItem"><div>省建筑行业协会组织专家到中铁大厦、中铁佳苑项...</div><span>6-19</span></div>
 						<div class="conItem"><div>云南省建筑行业协会召开技术成果评价会</div><span>6-19</span></div>
@@ -21,7 +21,7 @@
 				<div class="con1">
 					<div class="conTitle">
 						<div class="conTitle_left"><img src="../../public/img/smallico2.png"><span>行业动态</span></div>
-						<div class="moreBtn">更多</div>
+						<div class="moreBtn" @click="newsMore">更多</div>
 					</div>
 					<div class="conText">
 						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
@@ -35,7 +35,7 @@
 				<div class="con1">
 					<div class="conTitle">
 						<div class="conTitle_left"><img src="../../public/img/smallico3.png"><span>会员动态</span></div>
-						<div class="moreBtn">更多</div>
+						<div class="moreBtn" @click="memberMore">更多</div>
 					</div>
 					<div class="conText">
 						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
@@ -50,12 +50,12 @@
 		</div>
 		<div class="ban1"><img src="../../public/img/banner2.jpg"></div>
 		<div class="part1">
-			<div class="parTitle"><h1>政策公告</h1><div>查看更多</div></div>
+			<div class="parTitle"><h1>政策公告</h1><div @click="seeMore">查看更多</div></div>
 			<div class="partCon">
 				<div class="con1">
 					<div class="conTitle">
 						<div class="conTitle_left"><span>住建部</span></div>
-						<div class="moreBtn">更多</div>
+						<div class="moreBtn" @click="policyMore(1)">更多</div>
 					</div>
 					<div class="conText">
 						<div class="conItem nice"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
@@ -69,7 +69,7 @@
 				<div class="con1">
 					<div class="conTitle">
 						<div class="conTitle_left"><span>住建厅</span></div>
-						<div class="moreBtn">更多</div>
+						<div class="moreBtn" @click="policyMore(2)">更多</div>
 					</div>
 					<div class="conText">
 						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
@@ -83,7 +83,7 @@
 				<div class="con1">
 					<div class="conTitle">
 						<div class="conTitle_left"><span>州住建局</span></div>
-						<div class="moreBtn">更多</div>
+						<div class="moreBtn" @click="policyMore(3)">更多</div>
 					</div>
 					<div class="conText">
 						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
@@ -97,12 +97,12 @@
 			</div>
 		</div>
 		<div class="part1">
-			<div class="parTitle"><h1>行业服务</h1><div>查看更多</div></div>
+			<div class="parTitle"><h1>行业服务</h1><div @click="seeMore2">查看更多</div></div>
 			<div class="partCon">
 				<div class="con1">
 					<div class="conTitle">
 						<div class="conTitle_left"><span>价格信息</span></div>
-						<div class="moreBtn">更多</div>
+						<div class="moreBtn" @click="industryMore(1)">更多</div>
 					</div>
 					<div class="conText">
 						<div class="conItem nice"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
@@ -116,7 +116,7 @@
 				<div class="con1">
 					<div class="conTitle">
 						<div class="conTitle_left"><span>优质工程评审</span></div>
-						<div class="moreBtn">更多</div>
+						<div class="moreBtn" @click="industryMore(2)">更多</div>
 					</div>
 					<div class="conText">
 						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
@@ -130,7 +130,7 @@
 				<div class="con1">
 					<div class="conTitle">
 						<div class="conTitle_left"><span>专业培训</span></div>
-						<div class="moreBtn">更多</div>
+						<div class="moreBtn" @click="industryMore(3)">更多</div>
 					</div>
 					<div class="conText">
 						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
@@ -152,6 +152,39 @@ export default {
 	components:{
 		banner
 	},
+	methods:{
+		morexhNews(){
+			this.$router.push({name:'aboutus',query:{id:3}})
+		},
+		toDetail(){
+			this.$router.push('/articledetail')
+		},
+		newsMore(){
+			this.$router.push({name:'news',query:{id:1}})
+		},
+		memberMore(){
+			this.$router.push({name:'member',query:{id:3}})
+		},
+		policyMore(aa){
+			this.$router.push({name:'policystate',query:{id:aa}})
+		},
+		// policyMore2(){
+		// 	this.$router.push({name:'policystate',query:{id:2}})
+		// },
+		// policyMore3(){
+		// 	this.$router.push({name:'policystate',query:{id:3}})
+		// },
+		industryMore(aa){
+			this.$router.push({name:'industryserve',query:{id:aa}})
+		},
+		seeMore(){
+			this.$router.push('/policystate')
+		},
+		seeMore2(){
+			this.$router.push('/industryserve')
+		}
+
+	}
     
 }
 </script>

@@ -28,6 +28,31 @@ export default new Router({
       name: 'partner',
       component: () => import('./views/partner.vue')
     },
+    {
+      path: '/policystate',
+      name: 'policystate',
+      component: () => import('./views/policy-statement.vue')
+    },
+    {
+      path: '/news',
+      name: 'news',
+      component: () => import('./views/news.vue')
+    },
+    {
+      path: '/industryserve',
+      name: 'industryserve',
+      component: () => import('./views/industry-serve.vue')
+    },
+    {
+      path: '/member',
+      name: 'member',
+      component: () => import('./views/member.vue')
+    },
+    {
+      path: '/articledetail',
+      name: 'articledetail',
+      component: () => import('./views/article-detail.vue')
+    },
     // {
     //   path: '/about',
     //   name: 'about',

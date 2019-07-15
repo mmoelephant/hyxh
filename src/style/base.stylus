@@ -33,3 +33,85 @@ a
         color #1892FF
 .breadNav span:last-of-type
     color #333333
+.tabBar
+    display flex
+    justify-content space-between
+    align-items center
+    height 60px
+    background #ffffff
+    padding 0 40px 0 10px
+    box-sizing border-box
+    font-size 14px
+    color #666666
+    line-height 14px
+.tabLeft
+    display flex
+    li
+        padding 0 20px
+        border-right 1px #e6e6e6 solid
+        box-sizing border-box
+        cursor pointer
+    li:hover
+        color #1892FF
+    li.tabAct
+        color #1892FF
+.tabLeft li:last-of-type
+    border none
+.tabRight
+    display flex
+    input
+        width 300px
+        height 36px
+        background transparent
+        border 1px #e6e6e6 solid
+        border-right none
+        box-sizing border-box
+        outline none
+        font-size 12px
+        text-indent 12px
+    div.ico
+        width 36px
+        height 36px
+        background #1892FF url(../../public/img/searchi3.png) no-repeat center
+        cursor pointer
+    div.ico:hover
+        background-color #53B4FF
+.articles
+    width 100%
+    background #ffffff
+    margin-top 10px
+.articles .resItem:last-of-type
+    border none
+
+.resItem
+    height 80px
+    padding 0 40px
+    border-bottom 1px #e6e6e6 solid
+    box-sizing border-box
+    font-size 16px
+    color #333333
+    line-height 16px
+    cursor pointer
+    display flex
+    justify-content space-between
+    align-items center
+
+
+.resItem:hover .resTitle
+    color #1892FF
+    text-decoration underline
+    transition .2s
+
+.resItem:hover .resTime
+    text-decoration none
+
+.resTitle.titleRed
+    font-weight bold
+    color #FF4720
+.resItem:hover .resTitle.titleRed
+    color #FF4720
+
+
+.resTime
+    font-size 14px
+    color #a6a6a6

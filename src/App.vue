@@ -27,46 +27,46 @@
 						</div>
 					</transition>
 				</li>
-				<li @mouseenter="show2=true" @mouseleave="show2=false">政策公告
+				<li :class='route.name=="policystate"?"navAct":""' @mouseenter="show2=true" @mouseleave="show2=false">政策公告
 					<transition name="fade">
-						<div class="showBox1" v-show='show2'>
-							<p>住建部</p>
-							<p>住建厅</p>
-							<p>州住建局</p>
-							<p>州建筑业协会</p>
-							<p>规范性文件</p>
+						<div class="showBox1" v-show='show2'> 
+							<p @click="toPolicy(1)">住建部</p>
+							<p @click="toPolicy(2)">住建厅</p>
+							<p @click="toPolicy(3)">州住建局</p>
+							<p @click="toPolicy(4)">州建筑业协会</p>
+							<p @click="toPolicy(5)">规范性文件</p>
 						</div>
 					</transition>
 				</li>
-				<li @mouseenter="show3=true" @mouseleave="show3=false">新闻动态
+				<li :class='route.name=="news"?"navAct":""' @mouseenter="show3=true" @mouseleave="show3=false">新闻动态
 					<transition name="fade">
 						<div class="showBox1" v-show='show3'>
-							<p>行业动态</p>
-							<p>党政要闻</p>
-							<p>党建工作</p>
-							<p>行业前瞻</p>
+							<p @click="toNews(1)">行业动态</p>
+							<p @click="toNews(2)">党政要闻</p>
+							<p @click="toNews(3)">党建工作</p>
+							<p @click="toNews(4)">行业前瞻</p>
 						</div>
 					</transition>
 				</li>
-				<li @mouseenter="show4=true" @mouseleave="show4=false">行业服务
+				<li :class='route.name=="industryserve"?"navAct":""' @mouseenter="show4=true" @mouseleave="show4=false">行业服务
 					<transition name="fade">
 						<div class="showBox1" v-show='show4'>
-							<p>价格信息</p>
-							<p>优质工程评审</p>
-							<p>专业培训</p>
+							<p @click="toIndustry(1)">价格信息</p>
+							<p @click="toIndustry(2)">优质工程评审</p>
+							<p @click="toIndustry(3)">专业培训</p>
 							<!-- <p>联系方式</p> -->
 						</div>
 					</transition>
 				</li>
-				<li @mouseenter="show5=true" @mouseleave="show5=false">会员管理
+				<li :class='route.name=="member"?"navAct":""' @mouseenter="show5=true" @mouseleave="show5=false">会员管理
 					<transition name="fade">
 						<div class="showBox1" v-show='show5'>
-							<p>申请入会</p>
-							<p>会员权利与义务</p>
-							<p>会员动态</p>
-							<p>会员展示</p>
-							<p>会费标准</p>
-							<p>下载中心</p>
+							<p @click="toMember(1)">申请入会</p>
+							<p @click="toMember(2)">会员权利与义务</p>
+							<p @click="toMember(3)">会员动态</p>
+							<p @click="toMember(4)">会员展示</p>
+							<p @click="toMember(5)">会费标准</p>
+							<p @click="toMember(6)">下载中心</p>
 						</div>
 					</transition>
 				</li>
@@ -131,6 +131,18 @@ export default {
 		},
 		toAbout(aa){
 			this.$router.push({name:'aboutus',query:{id:aa}})
+		},
+		toPolicy(aa){
+			this.$router.push({name:'policystate',query:{id:aa}})
+		},
+		toNews(aa){
+			this.$router.push({name:'news',query:{id:aa}})
+		},
+		toIndustry(aa){
+			this.$router.push({name:'industryserve',query:{id:aa}})
+		},
+		toMember(aa){
+			this.$router.push({name:'member',query:{id:aa}})
 		}
 	}
 }
