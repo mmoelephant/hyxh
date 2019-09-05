@@ -11,47 +11,47 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: () => import('./views/index.vue')
+      component: () => import('../views/index.vue')
     },
     {
       path: '/aboutus',
       name: 'aboutus',
-      component: () => import('./views/about-us.vue')
+      component: () => import('../views/about-us.vue')
     },
     {
       path: '/search',
       name: 'search',
-      component: () => import('./views/search.vue')
+      component: () => import('../views/search.vue')
     },
     {
       path: '/partner',
       name: 'partner',
-      component: () => import('./views/partner.vue')
+      component: () => import('../views/partner.vue')
     },
     {
       path: '/policystate',
       name: 'policystate',
-      component: () => import('./views/policy-statement.vue')
+      component: () => import('../views/policy-statement.vue')
     },
     {
       path: '/news',
       name: 'news',
-      component: () => import('./views/news.vue')
+      component: () => import('../views/news.vue')
     },
     {
       path: '/industryserve',
       name: 'industryserve',
-      component: () => import('./views/industry-serve.vue')
+      component: () => import('../views/industry-serve.vue')
     },
     {
       path: '/member',
       name: 'member',
-      component: () => import('./views/member.vue')
+      component: () => import('../views/member.vue')
     },
     {
       path: '/articledetail',
       name: 'articledetail',
-      component: () => import('./views/article-detail.vue')
+      component: () => import('../views/article-detail.vue')
     },
     // {
     //   path: '/about',

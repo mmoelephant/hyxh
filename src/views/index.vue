@@ -53,7 +53,7 @@
 			<div class="parTitle"><h1>政策公告</h1><div @click="seeMore">查看更多</div></div>
 			<div class="partCon">
 				<div class="con1">
-					<div class="conTitle">
+					<div class="conTitle conTitle1">
 						<div class="conTitle_left"><span>住建部</span></div>
 						<div class="moreBtn" @click="policyMore(1)">更多</div>
 					</div>
@@ -67,7 +67,7 @@
 					</div>
 				</div>
 				<div class="con1">
-					<div class="conTitle">
+					<div class="conTitle conTitle1">
 						<div class="conTitle_left"><span>住建厅</span></div>
 						<div class="moreBtn" @click="policyMore(2)">更多</div>
 					</div>
@@ -81,7 +81,7 @@
 					</div>
 				</div>
 				<div class="con1">
-					<div class="conTitle">
+					<div class="conTitle conTitle1">
 						<div class="conTitle_left"><span>州住建局</span></div>
 						<div class="moreBtn" @click="policyMore(3)">更多</div>
 					</div>
@@ -100,7 +100,7 @@
 			<div class="parTitle"><h1>行业服务</h1><div @click="seeMore2">查看更多</div></div>
 			<div class="partCon">
 				<div class="con1">
-					<div class="conTitle">
+					<div class="conTitle conTitle1">
 						<div class="conTitle_left"><span>价格信息</span></div>
 						<div class="moreBtn" @click="industryMore(1)">更多</div>
 					</div>
@@ -114,7 +114,7 @@
 					</div>
 				</div>
 				<div class="con1">
-					<div class="conTitle">
+					<div class="conTitle conTitle1">
 						<div class="conTitle_left"><span>优质工程评审</span></div>
 						<div class="moreBtn" @click="industryMore(2)">更多</div>
 					</div>
@@ -128,7 +128,7 @@
 					</div>
 				</div>
 				<div class="con1">
-					<div class="conTitle">
+					<div class="conTitle conTitle1">
 						<div class="conTitle_left"><span>专业培训</span></div>
 						<div class="moreBtn" @click="industryMore(3)">更多</div>
 					</div>
@@ -242,6 +242,9 @@ export default {
 .conTitle_left
 	display flex
 	align-items center
+	font-weight bold
+.conTitle.conTitle1
+	background #53B4FF
 .moreBtn
 	width 50px
 	height 20px
@@ -249,7 +252,7 @@ export default {
 	border-radius 12px
 	font-size 12px
 	text-align center
-	line-height 20px
+	line-height 19px
 	cursor pointer
 	transition .2s
 .moreBtn:hover
