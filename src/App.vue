@@ -8,9 +8,20 @@
 					<div class="searchBox"><input placeholder="请输入查询关键字" class="searchInput"><div class="searchIco" @click="searchIt"></div></div>
 				</div>
 				<div class="banRight">
-					<div class="rightItem"><div class="ii1"></div><div class="tt1"><h1>申请入会</h1><p>Apply membership</p></div></div>
+					<!-- <div class="rightItem"><div class="ii1"></div><div class="tt1"><h1>申请入会</h1><p>Apply membership</p></div></div>
 					<div class="rightItem"><div class="ii2"></div><div class="tt1"><h1>价格信息</h1><p>Price information</p></div></div>
-					<div class="rightItem"><div class="ii3"></div><div class="tt1"><h1>联系我们</h1><p>Contact us</p></div></div>
+					<div class="rightItem"><div class="ii3"></div><div class="tt1"><h1>联系我们</h1><p>Contact us</p></div></div> -->
+					<div class="rightItem" v-for="item in headerlist" v-bind:key="item.id" @click="gotoTheHeader(item.id)">
+						<div class="ii3" v-show="item.name&&item.name == '联系方式'"></div>
+						<div class="ii2" v-show="item.name&&item.name == '价格信息'"></div>
+						<div class="ii1" v-show="item.name&&item.name == '申请入会'"></div>
+						<div class="tt1">
+							<h1>{{item.name?item.name:'-'}}</h1>
+							<p v-show="item.name&&item.name == '联系方式'">Contact us</p>
+							<p v-show="item.name&&item.name == '价格信息'">Price information</p>
+							<p v-show="item.name&&item.name == '申请入会'">Apply membership</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -88,8 +99,9 @@
 			<li>云南造价协会</li>
 		</ul>
 		<div class="bottomInfo">
-			<div class="info1"><span>联系地址：云南省大理州大理市XX路XXXX号</span><span> &nbsp联系电话：0871-24658741</span><span> &nbspICP备案：滇ICP1200643</span></div>
-			<div class="info2">Copyright © 大理州建筑业协会（Dali Construction Association All Rights Reserved）</div>
+			<div class="info1"><span>联系地址：{{addre}}</span><span> &nbsp联系电话：{{tel}}</span><span> &nbspICP备案：{{icp}}</span></div>
+			<!-- <div class="info2">Copyright © 大理州建筑业协会（Dali Construction Association All Rights Reserved）</div> -->
+			<div class="info2">{{copyRight}}</div>
 			<div class="info3">技术支持：<span>昆明行列科技有限公司</span></div>
 			
 		</div>
@@ -107,7 +119,35 @@ export default {
 			show3:false,
 			show4:false,
 			show5:false,
+			headerlist:[],
+			addre:'',
+			tel:'',
+			icp:'',
+			copyRight:''
 		}
+	},
+	created(){
+		var data = {}
+		this.$api.get_header(data).then(v => {
+			if(v.data.errcode == 0&&v.data.errmsg == 'ok'&&v.data.data != []&&v.data.data != null&&v.data.data != ''){
+				this.headerlist = v.data.data	
+			}else{
+				this.headerlist = []
+			}
+		})
+		this.$api.get_footer(data).then(v => {
+			if(v.data.errcode == 0&&v.data.errmsg == 'ok'&&v.data.data != {}&&v.data.data != null&&v.data.data != ''){
+				this.addre = v.data.data.site_address
+				this.tel = v.data.data.site_tel
+				this.icp = v.data.data.site_icpnumber
+				this.copyRight = v.data.data.site_copyright
+			}else{
+				this.addre = ''
+				this.tel = ''
+				this.icp = ''
+				this.copyRight = ''
+			}
+		})
 	},
 	computed: {
 		route(){
@@ -119,9 +159,7 @@ export default {
 			// console.log(val)
 			// console.log(val.query.id)
 			// if(val.name == 'index'){
-
 			// }else if(val.name == 'aboutus'){
-				
 			// }
 		}
 	},
@@ -143,6 +181,9 @@ export default {
 		},
 		toMember(aa){
 			this.$router.push({name:'member',query:{id:aa}})
+		},
+		gotoTheHeader(aa){
+			// do something
 		}
 	}
 }

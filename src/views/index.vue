@@ -2,48 +2,18 @@
     <div class="zhu">
         <banner></banner>
 		<div class="part1">
-			<div class="parTitle"><h1>综合动态消息</h1></div>
+			<div class="parTitle"><h1>{{oneList.name}}</h1></div>
 			<div class="partCon">
-				<div class="con1">
+				<div class="con1" v-for="item in oneList.data" :key="item.id">
 					<div class="conTitle">
-						<div class="conTitle_left"><img src="../../public/img/smallico1.png"><span>协会动态</span></div>
-						<div class="moreBtn" @click="morexhNews">更多</div>
+						<div class="conTitle_left"><img src="../../public/img/smallico1.png"><span>{{item.name?item.name:'-'}}</span></div>
+						<div class="moreBtn" @click="morexhNews(item.id)">更多</div>
 					</div>
 					<div class="conText">
-						<div class="conItem nice"><div @click="toDetail">我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
-						<div class="conItem"><div>州建设工会组织看电影《反腐枪声》</div><span>6-19</span></div>
-						<div class="conItem"><div>省建筑行业协会组织专家到中铁大厦、中铁佳苑项...</div><span>6-19</span></div>
-						<div class="conItem"><div>云南省建筑行业协会召开技术成果评价会</div><span>6-19</span></div>
-						<div class="conItem"><div>2019年云南省工程建设质量管理小组竞赛活动成果...</div><span>6-19</span></div>
-						<div class="conItem"><div>我会与陕西省建筑业协会缔结友好合作关系</div><span>6-19</span></div>
-					</div>
-				</div>
-				<div class="con1">
-					<div class="conTitle">
-						<div class="conTitle_left"><img src="../../public/img/smallico2.png"><span>行业动态</span></div>
-						<div class="moreBtn" @click="newsMore">更多</div>
-					</div>
-					<div class="conText">
-						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
-						<div class="conItem"><div>州建设工会组织看电影《反腐枪声》</div><span>6-19</span></div>
-						<div class="conItem"><div>省建筑行业协会组织专家到中铁大厦、中铁佳苑项...</div><span>6-19</span></div>
-						<div class="conItem"><div>云南省建筑行业协会召开技术成果评价会</div><span>6-19</span></div>
-						<div class="conItem"><div>2019年云南省工程建设质量管理小组竞赛活动成果...</div><span>6-19</span></div>
-						<div class="conItem"><div>我会与陕西省建筑业协会缔结友好合作关系</div><span>6-19</span></div>
-					</div>
-				</div>
-				<div class="con1">
-					<div class="conTitle">
-						<div class="conTitle_left"><img src="../../public/img/smallico3.png"><span>会员动态</span></div>
-						<div class="moreBtn" @click="memberMore">更多</div>
-					</div>
-					<div class="conText">
-						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
-						<div class="conItem"><div>州建设工会组织看电影《反腐枪声》</div><span>6-19</span></div>
-						<div class="conItem"><div>省建筑行业协会组织专家到中铁大厦、中铁佳苑项...</div><span>6-19</span></div>
-						<div class="conItem"><div>云南省建筑行业协会召开技术成果评价会</div><span>6-19</span></div>
-						<div class="conItem"><div>2019年云南省工程建设质量管理小组竞赛活动成果...</div><span>6-19</span></div>
-						<div class="conItem"><div>我会与陕西省建筑业协会缔结友好合作关系</div><span>6-19</span></div>
+						<div class="conItem" v-for="item2 in oneList.data.articleData" :key="item2.id?item2.id:'0'">
+							<div @click="toDetail">{{item2.title&&item2.title != ''&&item2.title != null?item2.title:'我会义务举办2019年大理州建筑“安全生产月”暨...'}}</div>
+							<span>{{item2.time}}</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -149,12 +119,32 @@
 <script>
 import banner from '../components/banner'
 export default {
+	data(){
+		return {
+			oneList:{},
+			twoList:{},
+			threeList:{},
+		}
+	},
+	created(){
+		var data = {}
+		this.$api.get_index(data).then(v => {
+			console.log(v)
+			console.log(v.data.data.topData)
+			console.log(v.data.data.topData.one)
+			console.log(v.data.data.topData.two)
+			console.log(v.data.data.topData.three)
+			this.oneList = v.data.data.topData.one
+			this.twoList = v.data.data.topData.two
+			this.threeList = v.data.data.topData.three
+		})
+	},
 	components:{
 		banner
 	},
 	methods:{
-		morexhNews(){
-			this.$router.push({name:'aboutus',query:{id:3}})
+		morexhNews(aa){
+			this.$router.push({name:'aboutus',query:{id:aa}})
 		},
 		toDetail(){
 			this.$router.push('/articledetail')
