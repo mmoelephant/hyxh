@@ -2,17 +2,22 @@
     <div class="zhu">
         <banner></banner>
 		<div class="part1">
-			<div class="parTitle"><h1>{{oneList.name}}</h1></div>
+			<div class="parTitle"><h1>{{oneList.name?oneList.name:'综合动态信息'}}</h1></div>
 			<div class="partCon">
-				<div class="con1" v-for="item in oneList.data" :key="item.id">
+				<div class="con1" v-for="item in oneList.data" :key="item.id?item.id:index">
 					<div class="conTitle">
-						<div class="conTitle_left"><img src="../../public/img/smallico1.png"><span>{{item.name?item.name:'-'}}</span></div>
-						<div class="moreBtn" @click="morexhNews(item.id)">更多</div>
+						<div class="conTitle_left">
+							<img src="../../public/img/smallico1.png" v-show="item.name&&item.name == '协会动态'">
+							<img src="../../public/img/smallico2.png" v-show="item.name&&item.name == '行业动态'">
+							<img src="../../public/img/smallico3.png" v-show="item.name&&item.name == '会员动态'">
+							<span>{{item.name?item.name:'协会动态'}}</span>
+						</div>
+						<div class="moreBtn" @click="morexhNews(oneList.name,item.name,item.id)">更多</div>
 					</div>
 					<div class="conText">
-						<div class="conItem" v-for="item2 in oneList.data.articleData" :key="item2.id?item2.id:'0'">
-							<div @click="toDetail">{{item2.title&&item2.title != ''&&item2.title != null?item2.title:'我会义务举办2019年大理州建筑“安全生产月”暨...'}}</div>
-							<span>{{item2.time}}</span>
+						<div class="conItem" v-for="item2 in item.articleData" :key="item2.id?item2.id:index">
+							<div @click="toDetail(item2.id)">{{item2.title?item2.title:'我会义务举办2019年大理州建筑“安全生产月”暨...'}}</div>
+							<span>{{item2.time?item2.time:'06-19'}}</span>
 						</div>
 					</div>
 				</div>
@@ -20,95 +25,35 @@
 		</div>
 		<div class="ban1"><img src="../../public/img/banner2.jpg"></div>
 		<div class="part1">
-			<div class="parTitle"><h1>政策公告</h1><div @click="seeMore">查看更多</div></div>
+			<div class="parTitle"><h1>{{twoList.name?twoList.name:'政策公告'}}</h1><div @click="seeMore(twoList.name,twoList.id)">查看更多</div></div>
 			<div class="partCon">
-				<div class="con1">
+				<div class="con1" v-for="item in twoList.data" :key="item.id?item.id:index">
 					<div class="conTitle conTitle1">
-						<div class="conTitle_left"><span>住建部</span></div>
-						<div class="moreBtn" @click="policyMore(1)">更多</div>
+						<div class="conTitle_left"><span>{{item.name?item.name:'住建部'}}</span></div>
+						<div class="moreBtn" @click="morexhNews(twoList.name,item.name,item.id)">更多</div>
 					</div>
 					<div class="conText">
-						<div class="conItem nice"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
-						<div class="conItem"><div>州建设工会组织看电影《反腐枪声》</div><span>6-19</span></div>
-						<div class="conItem"><div>省建筑行业协会组织专家到中铁大厦、中铁佳苑项...</div><span>6-19</span></div>
-						<div class="conItem"><div>云南省建筑行业协会召开技术成果评价会</div><span>6-19</span></div>
-						<div class="conItem"><div>2019年云南省工程建设质量管理小组竞赛活动成果...</div><span>6-19</span></div>
-						<div class="conItem"><div>我会与陕西省建筑业协会缔结友好合作关系</div><span>6-19</span></div>
-					</div>
-				</div>
-				<div class="con1">
-					<div class="conTitle conTitle1">
-						<div class="conTitle_left"><span>住建厅</span></div>
-						<div class="moreBtn" @click="policyMore(2)">更多</div>
-					</div>
-					<div class="conText">
-						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
-						<div class="conItem"><div>州建设工会组织看电影《反腐枪声》</div><span>6-19</span></div>
-						<div class="conItem"><div>省建筑行业协会组织专家到中铁大厦、中铁佳苑项...</div><span>6-19</span></div>
-						<div class="conItem"><div>云南省建筑行业协会召开技术成果评价会</div><span>6-19</span></div>
-						<div class="conItem"><div>2019年云南省工程建设质量管理小组竞赛活动成果...</div><span>6-19</span></div>
-						<div class="conItem"><div>我会与陕西省建筑业协会缔结友好合作关系</div><span>6-19</span></div>
-					</div>
-				</div>
-				<div class="con1">
-					<div class="conTitle conTitle1">
-						<div class="conTitle_left"><span>州住建局</span></div>
-						<div class="moreBtn" @click="policyMore(3)">更多</div>
-					</div>
-					<div class="conText">
-						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
-						<div class="conItem"><div>州建设工会组织看电影《反腐枪声》</div><span>6-19</span></div>
-						<div class="conItem"><div>省建筑行业协会组织专家到中铁大厦、中铁佳苑项...</div><span>6-19</span></div>
-						<div class="conItem"><div>云南省建筑行业协会召开技术成果评价会</div><span>6-19</span></div>
-						<div class="conItem"><div>2019年云南省工程建设质量管理小组竞赛活动成果...</div><span>6-19</span></div>
-						<div class="conItem"><div>我会与陕西省建筑业协会缔结友好合作关系</div><span>6-19</span></div>
+						<div class="conItem"  v-for="item2 in item.articleData" :key="item2.id?item2.id:index">
+							<div @click="toDetail(item2.id)">{{item2.title?item2.title:'我会义务举办2019年大理州建筑“安全生产月”暨...'}}</div>
+							<span>{{item2.time?item2.time:'06-19'}}</span>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="part1">
-			<div class="parTitle"><h1>行业服务</h1><div @click="seeMore2">查看更多</div></div>
+			<div class="parTitle"><h1>{{threeList.name?threeList.name:'行业服务'}}</h1><div @click="seeMore(threeList.name,threeList.id)">查看更多</div></div>
 			<div class="partCon">
-				<div class="con1">
+				<div class="con1"  v-for="item in threeList.data" :key="item.id?item.id:index">
 					<div class="conTitle conTitle1">
-						<div class="conTitle_left"><span>价格信息</span></div>
-						<div class="moreBtn" @click="industryMore(1)">更多</div>
+						<div class="conTitle_left"><span>{{item.name?item.name:'价格信息'}}</span></div>
+						<div class="moreBtn" @click="morexhNews(threeList.name,item.name,item.id)">更多</div>
 					</div>
 					<div class="conText">
-						<div class="conItem nice"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
-						<div class="conItem"><div>州建设工会组织看电影《反腐枪声》</div><span>6-19</span></div>
-						<div class="conItem"><div>省建筑行业协会组织专家到中铁大厦、中铁佳苑项...</div><span>6-19</span></div>
-						<div class="conItem"><div>云南省建筑行业协会召开技术成果评价会</div><span>6-19</span></div>
-						<div class="conItem"><div>2019年云南省工程建设质量管理小组竞赛活动成果...</div><span>6-19</span></div>
-						<div class="conItem"><div>我会与陕西省建筑业协会缔结友好合作关系</div><span>6-19</span></div>
-					</div>
-				</div>
-				<div class="con1">
-					<div class="conTitle conTitle1">
-						<div class="conTitle_left"><span>优质工程评审</span></div>
-						<div class="moreBtn" @click="industryMore(2)">更多</div>
-					</div>
-					<div class="conText">
-						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
-						<div class="conItem"><div>州建设工会组织看电影《反腐枪声》</div><span>6-19</span></div>
-						<div class="conItem"><div>省建筑行业协会组织专家到中铁大厦、中铁佳苑项...</div><span>6-19</span></div>
-						<div class="conItem"><div>云南省建筑行业协会召开技术成果评价会</div><span>6-19</span></div>
-						<div class="conItem"><div>2019年云南省工程建设质量管理小组竞赛活动成果...</div><span>6-19</span></div>
-						<div class="conItem"><div>我会与陕西省建筑业协会缔结友好合作关系</div><span>6-19</span></div>
-					</div>
-				</div>
-				<div class="con1">
-					<div class="conTitle conTitle1">
-						<div class="conTitle_left"><span>专业培训</span></div>
-						<div class="moreBtn" @click="industryMore(3)">更多</div>
-					</div>
-					<div class="conText">
-						<div class="conItem"><div>我会义务举办2019年大理州建筑“安全生产月”暨...</div><span>6-19</span></div>
-						<div class="conItem"><div>州建设工会组织看电影《反腐枪声》</div><span>6-19</span></div>
-						<div class="conItem"><div>省建筑行业协会组织专家到中铁大厦、中铁佳苑项...</div><span>6-19</span></div>
-						<div class="conItem"><div>云南省建筑行业协会召开技术成果评价会</div><span>6-19</span></div>
-						<div class="conItem"><div>2019年云南省工程建设质量管理小组竞赛活动成果...</div><span>6-19</span></div>
-						<div class="conItem"><div>我会与陕西省建筑业协会缔结友好合作关系</div><span>6-19</span></div>
+						<div class="conItem"  v-for="item2 in item.articleData" :key="item2.id?item2.id:index">
+							<div @click="toDetail(item2.id)">{{item2.title?item2.title:'我会义务举办2019年大理州建筑“安全生产月”暨...'}}</div>
+							<span>{{item2.time?item2.time:'06-19'}}</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -129,53 +74,51 @@ export default {
 	created(){
 		var data = {}
 		this.$api.get_index(data).then(v => {
-			console.log(v)
-			console.log(v.data.data.topData)
-			console.log(v.data.data.topData.one)
-			console.log(v.data.data.topData.two)
-			console.log(v.data.data.topData.three)
-			this.oneList = v.data.data.topData.one
-			this.twoList = v.data.data.topData.two
-			this.threeList = v.data.data.topData.three
+			// console.log(v)
+			// console.log(v.data.data.topData)
+			// console.log(v.data.data.topData.one)
+			// console.log(v.data.data.topData.two)
+			// console.log(v.data.data.topData.three)
+			// if(v.data.data.topData != ''&&v.data.data.topData != {}&&v.data.data.topData != null&&v.data.data.topData != undefined){
+			// }
+			if(v.data.errcode == 0&&v.data.errmsg == 'ok'){
+				this.oneList = v.data.data.topData.one
+				this.twoList = v.data.data.topData.two
+				this.threeList = v.data.data.topData.three
+			}else{
+				this.oneList = {}
+				this.twoList = {}
+				this.threeList = {}
+			}
 		})
+
 	},
 	components:{
 		banner
 	},
 	methods:{
-		morexhNews(aa){
-			this.$router.push({name:'aboutus',query:{id:aa}})
+		morexhNews(aa,bb,cc){
+			// console.log(typeof aa)
+			// console.log(aa)
+			if(aa == '综合动态信息'){
+				if(bb == '协会动态'){
+					this.$router.push({name:'协会概况',query:{id:cc}})
+				}else if(bb == '行业动态'){
+					this.$router.push({name:'行业服务',query:{id:cc}})
+				}else{
+					this.$router.push({name:'会员管理',query:{id:cc}})
+				}
+			}else{
+				this.$router.push({name:aa,query:{id:cc}})
+			}
 		},
-		toDetail(){
-			this.$router.push('/articledetail')
+		toDetail(aa){
+			this.$router.push({name:'articledetail',query:{id:aa}})
 		},
-		newsMore(){
-			this.$router.push({name:'news',query:{id:1}})
-		},
-		memberMore(){
-			this.$router.push({name:'member',query:{id:3}})
-		},
-		policyMore(aa){
-			this.$router.push({name:'policystate',query:{id:aa}})
-		},
-		// policyMore2(){
-		// 	this.$router.push({name:'policystate',query:{id:2}})
-		// },
-		// policyMore3(){
-		// 	this.$router.push({name:'policystate',query:{id:3}})
-		// },
-		industryMore(aa){
-			this.$router.push({name:'industryserve',query:{id:aa}})
-		},
-		seeMore(){
-			this.$router.push('/policystate')
-		},
-		seeMore2(){
-			this.$router.push('/industryserve')
+		seeMore(aa,bb){
+			this.$router.push({name:aa,query:{id:bb}})
 		}
-
 	}
-    
 }
 </script>
 <style lang="stylus" scoped>

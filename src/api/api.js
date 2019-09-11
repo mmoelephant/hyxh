@@ -34,9 +34,6 @@ service1.interceptors.response.use(
     }
 )
 const api = {
-    get_cate_level1() {
-        return service1.post('/PageMaterialController/getMaterialsInfoByRecent',{})
-    },
     get_header(data){
 		if(data) data = qs.stringify(data, { allowDots: true })
 		return service1.post('/Api/Index/header', data)  
@@ -57,9 +54,17 @@ const api = {
         if(data) data = qs.stringify(data, { allowDots: true })
         return service1.post('/Api/Article/detail', data)
     },
-	get_reports(data) {
+    get_article_category(data){
 		if(data) data = qs.stringify(data, { allowDots: true })
-		return service.post('/PageReportController/findListByPage', data)
-	},
+		return service1.post('/Api/ArticleCategory/getData', data)  
+    },
+    get_article_category_detail(data){
+		if(data) data = qs.stringify(data, { allowDots: true })
+		return service1.post('/Api/ArticleCategory/detail', data)      
+    },
+    get_friend_link(data){
+		if(data) data = qs.stringify(data, { allowDots: true })
+		return service1.post('/Api/SystemLink/search', data)  
+    },
 }
 export default api

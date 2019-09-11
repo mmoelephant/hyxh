@@ -1,6 +1,6 @@
 <template>
-  <div>
-	  <div class="commonHead">
+<div>
+	<div class="commonHead">
 		<div class="bigBan">
 			<div class="bigBan_con">
 				<div class="banLeft">
@@ -8,10 +8,7 @@
 					<div class="searchBox"><input placeholder="请输入查询关键字" class="searchInput"><div class="searchIco" @click="searchIt"></div></div>
 				</div>
 				<div class="banRight">
-					<!-- <div class="rightItem"><div class="ii1"></div><div class="tt1"><h1>申请入会</h1><p>Apply membership</p></div></div>
-					<div class="rightItem"><div class="ii2"></div><div class="tt1"><h1>价格信息</h1><p>Price information</p></div></div>
-					<div class="rightItem"><div class="ii3"></div><div class="tt1"><h1>联系我们</h1><p>Contact us</p></div></div> -->
-					<div class="rightItem" v-for="item in headerlist" v-bind:key="item.id" @click="gotoTheHeader(item.id)">
+					<div class="rightItem" v-for="item in headerlist" v-bind:key="item.id" @click="gotoTheHeader(item.name,item.id)">
 						<div class="ii3" v-show="item.name&&item.name == '联系方式'"></div>
 						<div class="ii2" v-show="item.name&&item.name == '价格信息'"></div>
 						<div class="ii1" v-show="item.name&&item.name == '申请入会'"></div>
@@ -28,60 +25,19 @@
 		<div class="navBox">
 			<ul class="nav">
 				<li :class='(route.name=="index" || route.name=="search")?"navAct":""' @click='$router.push("/")'>首页</li>
-				<li :class='route.name=="aboutus"?"navAct":""' @mouseenter="show1=true" @mouseleave="show1=false">协会概况
-					<transition name="fade">
-						<div class="showBox1" v-show='show1'>
-							<p @click="toAbout(1)">协会简介</p>
-							<p @click="toAbout(2)">协会章程</p>
-							<p @click="toAbout(3)">协会动态</p>
-							<p @click="toAbout(4)">联系方式</p>
-						</div>
-					</transition>
+				<li :class='route.name==item.name?"navAct":""' 
+				v-for="item in navList" :key="item.id" 
+				@mouseenter="showChildren(item.id)" 
+				@mouseleave="notShowChildren(item.id)" 
+				@click="toCate(item.name,item.id,$event)">
+				{{item.name}}
+				<!-- @click="toCate(item.name,item.id)" -->
+				<transition name="fade">
+					<div class="showBox1" v-show="showThis == item.id&&item.name != '合作伙伴'">
+						<p v-for="item2 in item.children" :key="item2.id" @click="toAbout(item.name,item2.id,$event)">{{item2.name}}</p>
+					</div>
+				</transition>
 				</li>
-				<li :class='route.name=="policystate"?"navAct":""' @mouseenter="show2=true" @mouseleave="show2=false">政策公告
-					<transition name="fade">
-						<div class="showBox1" v-show='show2'> 
-							<p @click="toPolicy(1)">住建部</p>
-							<p @click="toPolicy(2)">住建厅</p>
-							<p @click="toPolicy(3)">州住建局</p>
-							<p @click="toPolicy(4)">州建筑业协会</p>
-							<p @click="toPolicy(5)">规范性文件</p>
-						</div>
-					</transition>
-				</li>
-				<li :class='route.name=="news"?"navAct":""' @mouseenter="show3=true" @mouseleave="show3=false">新闻动态
-					<transition name="fade">
-						<div class="showBox1" v-show='show3'>
-							<p @click="toNews(1)">行业动态</p>
-							<p @click="toNews(2)">党政要闻</p>
-							<p @click="toNews(3)">党建工作</p>
-							<p @click="toNews(4)">行业前瞻</p>
-						</div>
-					</transition>
-				</li>
-				<li :class='route.name=="industryserve"?"navAct":""' @mouseenter="show4=true" @mouseleave="show4=false">行业服务
-					<transition name="fade">
-						<div class="showBox1" v-show='show4'>
-							<p @click="toIndustry(1)">价格信息</p>
-							<p @click="toIndustry(2)">优质工程评审</p>
-							<p @click="toIndustry(3)">专业培训</p>
-							<!-- <p>联系方式</p> -->
-						</div>
-					</transition>
-				</li>
-				<li :class='route.name=="member"?"navAct":""' @mouseenter="show5=true" @mouseleave="show5=false">会员管理
-					<transition name="fade">
-						<div class="showBox1" v-show='show5'>
-							<p @click="toMember(1)">申请入会</p>
-							<p @click="toMember(2)">会员权利与义务</p>
-							<p @click="toMember(3)">会员动态</p>
-							<p @click="toMember(4)">会员展示</p>
-							<p @click="toMember(5)">会费标准</p>
-							<p @click="toMember(6)">下载中心</p>
-						</div>
-					</transition>
-				</li>
-				<li @click="$router.push('/partner')" :class='route.name=="partner"?"navAct":""'>合作伙伴</li>
 			</ul>
 		</div>
 	</div>
@@ -99,44 +55,46 @@
 			<li>云南造价协会</li>
 		</ul>
 		<div class="bottomInfo">
-			<div class="info1"><span>联系地址：{{addre}}</span><span> &nbsp联系电话：{{tel}}</span><span> &nbspICP备案：{{icp}}</span></div>
+			<div class="info1">
+				<span>联系地址：{{addre?addre:'云南省大理州大理市XX路XXXX号'}}</span>
+				<span> &nbsp联系电话：{{tel?tel:'0871-24658741'}}</span>
+				<span> &nbspICP备案：{{icp?icp:'滇ICP1200643'}}</span>
+			</div>
 			<!-- <div class="info2">Copyright © 大理州建筑业协会（Dali Construction Association All Rights Reserved）</div> -->
-			<div class="info2">{{copyRight}}</div>
+			<div class="info2">{{copyRight?copyRight:'Copyright © 大理州建筑业协会（Dali Construction Association All Rights Reserved）'}}</div>
 			<div class="info3">技术支持：<span>昆明行列科技有限公司</span></div>
 			
 		</div>
 	</div>
-  </div>
+</div>
 </template>
 <script>
 export default {
 	data(){
 		return {
-			message:'这里是一些文字...',
-			navOn:1,
-			show1:false,
-			show2:false,
-			show3:false,
-			show4:false,
-			show5:false,
 			headerlist:[],
+			navList:[],
+			showThis:-1,
 			addre:'',
 			tel:'',
 			icp:'',
-			copyRight:''
+			copyRight:'',
 		}
 	},
 	created(){
 		var data = {}
 		this.$api.get_header(data).then(v => {
-			if(v.data.errcode == 0&&v.data.errmsg == 'ok'&&v.data.data != []&&v.data.data != null&&v.data.data != ''){
+			console.log(v)
+			// if(v.data.errcode == 0&&v.data.errmsg == 'ok'&&v.data.data != null&&v.data.data != ''&&v.data.data != undefined){
+			if(v.data.errcode == 0&&v.data.errmsg == 'ok'){
 				this.headerlist = v.data.data	
 			}else{
 				this.headerlist = []
 			}
 		})
 		this.$api.get_footer(data).then(v => {
-			if(v.data.errcode == 0&&v.data.errmsg == 'ok'&&v.data.data != {}&&v.data.data != null&&v.data.data != ''){
+			// if(v.data.errcode == 0&&v.data.errmsg == 'ok'&&v.data.data != null&&v.data.data != ''&&v.data.data != undefined){
+			if(v.data.errcode == 0&&v.data.errmsg == 'ok'){
 				this.addre = v.data.data.site_address
 				this.tel = v.data.data.site_tel
 				this.icp = v.data.data.site_icpnumber
@@ -148,6 +106,13 @@ export default {
 				this.copyRight = ''
 			}
 		})
+		this.$api.get_article_category(data).then(v => {
+			console.log(v.data.data)
+			this.navList = v.data.data
+		})
+		this.$api.get_friend_link(data).then(v => {
+			// console.log(v)
+		})
 	},
 	computed: {
 		route(){
@@ -156,45 +121,53 @@ export default {
 	},
 	watch:{
 		route(val) {
-			// console.log(val)
 			// console.log(val.query.id)
-			// if(val.name == 'index'){
-			// }else if(val.name == 'aboutus'){
-			// }
 		}
 	},
 	methods:{
 		searchIt(){
 			this.$router.push({name:'search'})
 		},
-		toAbout(aa){
-			this.$router.push({name:'aboutus',query:{id:aa}})
-		},
-		toPolicy(aa){
-			this.$router.push({name:'policystate',query:{id:aa}})
-		},
-		toNews(aa){
-			this.$router.push({name:'news',query:{id:aa}})
-		},
-		toIndustry(aa){
-			this.$router.push({name:'industryserve',query:{id:aa}})
-		},
-		toMember(aa){
-			this.$router.push({name:'member',query:{id:aa}})
-		},
-		gotoTheHeader(aa){
+		gotoTheHeader(aa,bb){
 			// do something
-		}
+			if(aa=='申请入会'){
+				this.$router.push({name:'会员管理',query:{id:bb}})
+			}else if(aa=='价格信息'){
+				this.$router.push({name:'行业服务',query:{id:bb}})
+			}else{
+				this.$router.push({name:'协会概况',query:{id:bb}})
+			}
+		},
+		showChildren(aa){
+			this.showThis = aa
+		},
+		notShowChildren(){
+			this.showThis = -1
+		},
+		toCate(aa,bb,event){
+			// this.$router.push({name:aa,query:{id:bb}})
+			// console.log(typeof event.target)
+			// console.log(event)
+			if(event.target.tagName == 'LI'||event.target.tagName == 'li'){
+				this.$router.push({name:aa,query:{id:bb}})
+			}
+		},
+		toAbout(aa,bb,event){
+			// console.log(event)
+			// console.log(event.target)
+			// console.log(typeof event.target)
+			// console.log(event.target.tagName)
+			// console.log(event.target.tagName == 'P')
+			if(event.target.tagName == 'P'||event.target.tagName == 'p'){
+				// console.log(bb)
+				this.$router.push({name:aa,query:{id:bb}})
+			}
+		},
 	}
 }
 </script>
 
 <style lang="stylus" scoped>
-// .commonHead
-// 	height 416px
-
-// 	// border 10px red solid
-// 	// box-sizing border-box
 .bigBan
 	width 100%
 	height 360px
@@ -297,6 +270,7 @@ export default {
 	color #666666
 	line-height 56px
 	li
+		height 56px
 		padding 0 30px
 		box-sizing border-box
 		cursor pointer

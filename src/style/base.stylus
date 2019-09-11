@@ -78,6 +78,7 @@ a
         background-color #53B4FF
 .articles
     width 100%
+    min-height 200px
     background #ffffff
     margin-top 10px
 .articles .resItem:last-of-type
@@ -95,8 +96,7 @@ a
     display flex
     justify-content space-between
     align-items center
-
-
+    
 .resItem:hover .resTitle
     color #1892FF
     text-decoration underline
@@ -115,3 +115,15 @@ a
 .resTime
     font-size 14px
     color #a6a6a6
+
+.el-message
+    min-width: 200px
+    top 40% !important
+    padding 15px 15px 15px 40px
+.el-message--info
+    background rgba(0,0,0,0.75)
+    border none 
+.el-message--info .el-icon-info
+    color #ffffff
+.el-message--info .el-message__content
+    color #ffffff

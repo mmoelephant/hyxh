@@ -15,7 +15,7 @@ export default new Router({
     },
     {
       path: '/aboutus',
-      name: 'aboutus',
+      name: '协会概况',
       component: () => import('../views/about-us.vue')
     },
     {
@@ -25,27 +25,27 @@ export default new Router({
     },
     {
       path: '/partner',
-      name: 'partner',
+      name: '合作伙伴',
       component: () => import('../views/partner.vue')
     },
     {
       path: '/policystate',
-      name: 'policystate',
+      name: '政策公告',
       component: () => import('../views/policy-statement.vue')
     },
     {
       path: '/news',
-      name: 'news',
+      name: '新闻动态',
       component: () => import('../views/news.vue')
     },
     {
       path: '/industryserve',
-      name: 'industryserve',
+      name: '行业服务',
       component: () => import('../views/industry-serve.vue')
     },
     {
       path: '/member',
-      name: 'member',
+      name: '会员管理',
       component: () => import('../views/member.vue')
     },
     {
