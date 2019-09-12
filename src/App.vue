@@ -5,7 +5,11 @@
 			<div class="bigBan_con">
 				<div class="banLeft">
 					<div><h1>大理州建筑业协会</h1><p>Dali Construction Industry Association</p></div>
-					<div class="searchBox"><input placeholder="请输入查询关键字" class="searchInput"><div class="searchIco" @click="searchIt"></div></div>
+					<div class="searchBox">
+						<input type="text" placeholder="请输入查询关键字" class="searchInput" v-model="searchWord">
+						<!-- onInput="inputkeyword" -->
+						<div class="searchIco" @click="searchIt"></div>
+					</div>
 				</div>
 				<div class="banRight">
 					<div class="rightItem" v-for="item in headerlist" v-bind:key="item.id" @click="gotoTheHeader(item.name,item.id)">
@@ -72,6 +76,7 @@
 export default {
 	data(){
 		return {
+			searchWord:'',
 			headerlist:[],
 			navList:[],
 			showThis:-1,
@@ -84,7 +89,7 @@ export default {
 	created(){
 		var data = {}
 		this.$api.get_header(data).then(v => {
-			console.log(v)
+			// console.log(v)
 			// if(v.data.errcode == 0&&v.data.errmsg == 'ok'&&v.data.data != null&&v.data.data != ''&&v.data.data != undefined){
 			if(v.data.errcode == 0&&v.data.errmsg == 'ok'){
 				this.headerlist = v.data.data	
@@ -107,7 +112,6 @@ export default {
 			}
 		})
 		this.$api.get_article_category(data).then(v => {
-			console.log(v.data.data)
 			this.navList = v.data.data
 		})
 		this.$api.get_friend_link(data).then(v => {
@@ -121,12 +125,22 @@ export default {
 	},
 	watch:{
 		route(val) {
-			// console.log(val.query.id)
+			// console.log(val.name)
 		}
 	},
 	methods:{
+		// inputkeyword(){
+		// },
 		searchIt(){
-			this.$router.push({name:'search'})
+			if(this.searchWord != ''){
+				this.$router.push({name:'search',query:{word:this.searchWord}})
+			}else{
+				this.$message({
+					type:'info',
+					message:'请先输入关键词！'
+				})
+			}
+			// this.$router.push({name:'search'})
 		},
 		gotoTheHeader(aa,bb){
 			// do something

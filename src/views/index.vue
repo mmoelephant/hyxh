@@ -192,6 +192,7 @@ export default {
 	background #ffffff
 	color #1892FF
 .conText
+	min-height 100px
 	.conItem
 		height 50px
 		padding 0 14px
@@ -208,9 +209,9 @@ export default {
 			color #a6a6a6
 	.conItem div
 		width 280px
-        overflow hidden
-        text-overflow ellipsis
-        white-space nowrap
+		overflow hidden
+		text-overflow ellipsis
+		white-space nowrap
 		transition .2s
 	.conItem:hover div
 		color #1892FF

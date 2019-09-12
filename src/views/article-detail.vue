@@ -1,5 +1,5 @@
 <template>
-    <div class="detail">
+    <div class="detail" v-loading.fullscreen="loading">
         <div class="breadNav">
             <span @click="toIndex">首页 > </span>
             <span>{{firstNav}}</span>
@@ -14,8 +14,7 @@
                 <div class="info-click">点击量：<span>{{conView?conView:'-'}}</span></div>
             </div>
             <div class="abstract">
-                摘要：《云南省建设工程材料及设备价格信息》是由云南省住建厅科技与标准定额处领导，云南省工程建设技术经济室监督管理，
-                “行列资讯”具体运作实施的云南省权威工程材料价格系列期刊，《云南省建设工程材料及设备价格信息》是由云南省住建厅科技与标准定额处领导
+                摘要：{{condescri?condescri:'-'}}
             </div>
             <div class="mainBody">
                 <h1>{{conTitle?conTitle:'-'}}</h1>
@@ -33,6 +32,7 @@
 export default {
     data(){
         return {
+            loading:true,
             firstNav:'',
             secondNav:'',
             addreId:-1,
@@ -40,6 +40,7 @@ export default {
             conAuthor:'',
             conTime:'',
             conView:'',
+            condescri:'',
             conTent:'',
             preId:-1,
             nextId:-1
@@ -47,24 +48,21 @@ export default {
         }
     },
     created(){
-        console.log(this.$route.query.id)
         var data = {
-            id:this.$route.query.id
+            id:parseInt(this.$route.query.id)
         }
         this.$api.get_article_detail(data).then(v => {
-            console.log(v)
             if(v.data.errcode == 0&&v.data.errmsg =='ok'){
                 this.addreId = parseInt(v.data.data.ac_id)
                 this.conTitle = v.data.data.title
                 this.conAuthor = v.data.data.author
                 this.conTime = v.data.data.showtime
                 this.conView = v.data.data.views
+                this.condescri = v.data.data.description
                 this.conTent = v.data.data.content
-                this.preId = v.data.data.relate.prev.id
-                this.nextId = v.data.data.relate.next.id
+                this.preId = parseInt(v.data.data.relate.prev.id)
+                this.nextId = parseInt(v.data.data.relate.next.id)
                 this.$api.get_article_category_detail({id:this.addreId}).then(v => {
-                    console.log(v)
-                    console.log(v.data.data.treeData.one.id)
                     if(v.data.data.treeData.data.indexOf('>') != -1){
                         this.firstNav = v.data.data.treeData.data.split('>')[0] + ' >'
                         this.secondNav = v.data.data.treeData.data.split('>')[1] + '>'
@@ -78,8 +76,12 @@ export default {
                 this.conAuthor = ''
                 this.conTime = ''
                 this.conView = ''
+                this.condescri = ''
                 this.conTent = ''
             }
+			this.$nextTick(() => {
+				this.loading = false
+			})
         })
     },
     methods:{
@@ -87,36 +89,39 @@ export default {
             this.$router.push({name:'index'})
         },
         preOne(){
+            this.loading = true
             this.$api.get_article_detail({id:this.preId}).then(v => {
-                console.log(v)
+                this.loading = false
                 if(v.data.errcode == 0&&v.data.errmsg =='ok'){
                     this.conTitle = v.data.data.title
                     this.conAuthor = v.data.data.author
                     this.conTime = v.data.data.showtime
                     this.conView = v.data.data.views
+                    this.condescri = v.data.data.description
                     this.conTent = v.data.data.content
-                    this.preId = v.data.data.relate.prev.id
-                    this.nextId = v.data.data.relate.next.id
+                    this.preId = parseInt(v.data.data.relate.prev.id)
+                    this.nextId = parseInt(v.data.data.relate.next.id)
                 }else{
                     this.$message({
                         message: v.data.errmsg,
                         type: 'info',
-                        // duration:100000
                     });
                 }
             })
         },
         nextOne(){
+            this.loading = true
             this.$api.get_article_detail({id:this.nextId}).then(v => {
-                console.log(v)
+                this.loading = false
                 if(v.data.errcode == 0&&v.data.errmsg =='ok'){
                     this.conTitle = v.data.data.title
                     this.conAuthor = v.data.data.author
                     this.conTime = v.data.data.showtime
                     this.conView = v.data.data.views
+                    this.condescri = v.data.data.description
                     this.conTent = v.data.data.content
-                    this.preId = v.data.data.relate.prev.id
-                    this.nextId = v.data.data.relate.next.id
+                    this.preId = parseInt(v.data.data.relate.prev.id)
+                    this.nextId = parseInt(v.data.data.relate.next.id)
                 }else{
                     this.$message({
                         message: v.data.errmsg,
@@ -166,9 +171,9 @@ export default {
     margin-right 40px
 .abstract
     width 100%
-    height 68px
+    min-height 68px
     background #F2F2F2
-    padding 10px 16px 0 16px
+    padding 10px 16px 10px 16px
     box-sizing border-box
     margin 15px 0 17px 0
     font-size 12px

@@ -1,22 +1,25 @@
 <template>
-    <div class="searchRes">
+    <div class="searchRes" v-loading.fullscreen="loading">
         <div class="breadNav">
             <span @click="toIndex">首页 > </span>
             <span>站内搜索</span>
         </div>
-        <div class="resTip">以下是<span>“大理州建筑”</span>的相关搜索结果：</div>
+        <div class="resTip">以下是<span>{{word}}</span>的相关搜索结果：</div>
         <div class="resBox">
-            <div class="resItem">
-                <div class="resTitle"><span>大理州建筑</span>业协会今日与山西省建筑协会达成合作关系</div>
-                <div class="resTime">2019-05-16</div>
+            <div class="resItem" v-for="item in results" :key="item.id" @click="goArticleDetail(item.id)">
+                <div class="resTitle">
+                    {{item.title.substr(0,item.title.indexOf(word))}}
+                    <span style="color:#F2342B">{{word}}</span>
+                    {{item.title.substr(item.title.indexOf(word) + word.length).length > 15?
+                    item.title.substr(item.title.indexOf(word) + word.length).slice(0,15) + '...':
+                    item.title.substr(item.title.indexOf(word) + word.length)}}
+                </div>
+                <div class="resTime">{{item.showtime?item.showtime:'-'}}</div>
             </div>
-            <div class="resItem">
-                <div class="resTitle">关于<span>大理州</span>近期建筑材料整改的通知</div>
-                <div class="resTime">2019-05-16</div>
-            </div>
-            <div class="resItem">
-                <div class="resTitle">2018年“<span>建筑</span>月”活动暨质量宣贯会的视频材料</div>
-                <div class="resTime">2019-05-16</div>
+            <div class="noImg" v-show="results.length == 0">
+                <img src="../../public/img/noArticle.png">
+                <div class="noTxt">没有找到相关的文章信息...</div>
+                <div class="noTxt2">建议输入准确的查询内容，再试一试</div>
             </div>
         </div>
     </div>
@@ -25,12 +28,80 @@
 export default {
     data(){
         return {
-            
+            loading:true,
+            results:[],
+            word:''
         }
     },
+    created(){
+        this.word = this.$route.query.word
+        if(this.$route.query.word != ''){
+            var data = {
+                keyword:this.$route.query.word
+            }
+            this.$api.get_articles(data).then(v => {
+                if(v.data.errcode == 0 && v.data.errmsg == 'ok'){
+                    this.results = v.data.data.data
+                }else{
+                    this.results = []
+                    this.$message({
+                        type:'info',
+                        message:'请求出错！'
+                    })
+                }
+                this.$nextTick(() => {
+                    this.loading = false
+                })
+            })
+        }else{
+            this.$message({
+                type:'info',
+                message:'搜索出错,请稍候重试！'
+            })
+        }
+    },
+	computed: {
+		route(){
+			return this.$route
+		}
+	},
+	watch:{
+		route(val) {
+            // console.log(val.query.word)
+            this.word = val.query.word
+            if(this.$route.query.word != ''){
+                this.loading = true
+                var data = {
+                    keyword:this.$route.query.word
+                }
+                this.$api.get_articles(data).then(v => {
+                    if(v.data.errcode == 0 && v.data.errmsg == 'ok'){
+                        this.results = v.data.data.data
+                    }else{
+                        this.results = []
+                        this.$message({
+                            type:'info',
+                            message:'请求出错！'
+                        })
+                    }
+                    this.$nextTick(() => {
+                        this.loading = false
+                    })
+                })
+            }else{
+                this.$message({
+                    type:'info',
+                    message:'搜索出错,请稍候重试！'
+                })
+            }
+		}
+	},
     methods:{
         toIndex(){
             this.$router.push({name:'index'})
+        },
+        goArticleDetail(aa){
+            this.$router.push({name:'articledetail',query:{id:aa}})
         }
     }
 }
@@ -54,6 +125,7 @@ export default {
         color #1892FF
 .resBox
     width 100%
+    min-height 300px
     background #ffffff
     margin-top 10px
 .resBox .resItem:last-of-type
@@ -86,6 +158,19 @@ export default {
 .resTime
     font-size 14px
     color #a6a6a6
+.noImg
+    box-sizing border-box
+    padding-top 40px
+    text-align center
+.noTxt
+    font-size 18px
+    color #666666
+    font-weight bold
+.noTxt2
+    margin-top 6px
+    font-size 12px
+    color #a6a6a6
+
 </style>
 
 

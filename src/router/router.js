@@ -16,7 +16,14 @@ export default new Router({
     {
       path: '/aboutus',
       name: '协会概况',
-      component: () => import('../views/about-us.vue')
+      component: () => import('../views/about-us.vue'),
+      // children:[
+      //   {
+      //     path:'articledetail',
+      //     name:'articledetail',
+      //     component:() => import('../views/article-detail.vue')
+      //   },
+      // ],
     },
     {
       path: '/search',
