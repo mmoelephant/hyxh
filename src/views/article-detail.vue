@@ -105,6 +105,7 @@ export default {
                     this.$message({
                         message: v.data.errmsg,
                         type: 'info',
+                        duration:500
                     });
                 }
             })
@@ -126,6 +127,7 @@ export default {
                     this.$message({
                         message: v.data.errmsg,
                         type: 'info',
+                        duration:500
                         // duration:100000
                     });
                     // this.conTitle = ''

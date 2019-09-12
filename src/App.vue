@@ -186,6 +186,7 @@ export default {
 	width 100%
 	height 360px
 	background url(../public/img/headBan.jpg) no-repeat center
+	background-size cover
 .bigBan_con
 	width 1200px
 	height 100%
