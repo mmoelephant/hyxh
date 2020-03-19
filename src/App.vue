@@ -61,8 +61,8 @@
 		<div class="bottomInfo">
 			<div class="info1">
 				<span>联系地址：{{addre?addre:'云南省大理州大理市XX路XXXX号'}}</span>
-				<span> &nbsp联系电话：{{tel?tel:'0871-24658741'}}</span>
-				<span> &nbspICP备案：{{icp?icp:'滇ICP1200643'}}</span>
+				<span>&nbsp;&nbsp;联系电话：{{tel?tel:'0871-24658741'}}</span>
+				<span class="bei" style="cursor: pointer" @click="tobei">&nbsp;&nbsp;ICP备案：{{icp?icp:'滇ICP1200643'}}</span>
 			</div>
 			<!-- <div class="info2">Copyright © 大理州建筑业协会（Dali Construction Association All Rights Reserved）</div> -->
 			<div class="info2">{{copyRight?copyRight:'Copyright © 大理州建筑业协会（Dali Construction Association All Rights Reserved）'}}</div>
@@ -177,6 +177,9 @@ export default {
 				this.$router.push({name:aa,query:{id:bb}})
 			}
 		},
+		tobei() {
+			window.open('http://beian.miit.gov.cn/state/outPortal/loginPortal.action', "_blank");
+		}
 	}
 }
 </script>
@@ -356,12 +359,12 @@ export default {
 	color #a6a6a6
 	text-align center
 	line-height 12px
+.bei
+	cursor pointer
+.bei:hover
+	color #666
 .info2,.info3
 	margin-top 8px
 .info3 span
 	color #333
-
-
-
-
 </style>
